@@ -5,6 +5,12 @@ function start() {
    });
 }
 
+function end() {
+    chrome.tabs.query({currentWindow: true, active: true}, function (tabs){
+        var activeTab = tabs[0];
+        chrome.tabs.sendMessage(activeTab.id, {"message": "end"});
+   });
+}
 
 
 function calibrate() {
@@ -22,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('btn').addEventListener("click", start);
     document.getElementById('calibrate').addEventListener("click", calibrate);
+    document.getElementById('end_btn').addEventListener("click", end);
 })
 
 

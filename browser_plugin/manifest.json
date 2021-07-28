@@ -19,7 +19,7 @@
 
 	 "content_scripts":[{
 		 "matches":["http://*/*","https://*/*"],
-		 "js":["jquery-3.6.0.min.js","content/content-script.js","webgazer.js"],
+		 "js":["jquery-3.6.0.min.js","content/content-script.js","content/eye-tracker.js","content/calibration.js","webgazer.js"],
 		 "css":["content/content-script.css"]
 	 }],
 
