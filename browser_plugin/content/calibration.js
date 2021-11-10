@@ -1,38 +1,5 @@
-var x = [[],[]];
-
-// start recording
-function recordGazeForCalibration() {
-  webgazer
-    .setGazeListener(function (data, elapsedTime) {
-      if (data == null) {
-        return;
-      }
-      var xprediction = data.x;
-      var yprediction = data.y;
-
-      x[0].push(xprediction)
-      x[1].push(yprediction)
-      // console.log(xprediction, yprediction);
-    })
-    .begin();
-    webgazer.showPredictionPoints(true);
-}
-
-
-function store_points_variable(){
-  webgazer.params.storingPoints = true;
-}
-
-/*
- * Sets store_points to false, so prediction points aren't
- * stored any more
- */
-function stop_storing_points_variable(){
-  webgazer.params.storingPoints = false;
-}
-
-function calculatePrecision(past50Array=x) {
-  console.log(past50Array)
+function calculatePrecision(past50Array) {
+  // console.log(past50Array)
   var windowHeight = $(window).height();
   var windowWidth = $(window).width();
 

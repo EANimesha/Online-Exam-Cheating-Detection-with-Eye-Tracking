@@ -15,12 +15,21 @@ var CornerGazes = {'lt':[],'rt':[],'rb':[],'lb':[]}
 // x min, x max, y min, y max
 var cornerCoordinates = []
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
   if (request.message === "start") {
-    webgazer.begin();
-    webgazer.showPredictionPoints(true)
-    makeFullScreen();
-    LoadEyeTrackingControls();
+    webgazer.params.showVideoPreview = true;
+    //start the webgazer tracker
+    await webgazer.setRegression('ridge') 
+        .setGazeListener(function(data, clock) {
+        })
+        // .saveDataAcrossSessions(true)
+        .begin();
+        webgazer.showVideoPreview(true) /* shows all video previews */
+            .showPredictionPoints(true) /* shows a square every 100 milliseconds where current prediction is */
+            .applyKalmanFilter(true); /* Kalman Filter defaults to on. Can be toggled by user. */
+
+    // makeFullScreen();
+    // LoadEyeTrackingControls();
   } else if (request.message === "calibrate") {
     makeFullScreen();
     const content =
@@ -28,18 +37,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
     document.body.insertAdjacentHTML("beforeend", content);
     $(document).ready( function () {
-      webgazer.begin();
-      // webgazer.setRegression("ridge"); 
-      webgazer.showPredictionPoints(true)
 
-      $(".Calibration").click(function () {
+      $(".Calibration").click(async function () {
         // click event on the calibration buttons
-        var prediction = webgazer.getCurrentPrediction();
+        var prediction = await webgazer.getCurrentPrediction();
         if (prediction) {
-          var x = prediction.x;
-          var y = prediction.y;
+          var x = prediction.x.toFixed();
+          var y = prediction.y.toFixed();
         }
-
         var id = $(this).attr("id");
 
         switch (id) {
@@ -95,9 +100,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
           // makes the variables true for 5 seconds & plots the points
           $(document).ready(function () {
-            recordGazeForCalibration()
+            webgazer.params.storingPoints = true;
+            // recordGazeForCalibration()
             sleep(5000).then(() => {
-              var precision_measurement = calculatePrecision();
+              webgazer.params.storingPoints = false;
+              var past50 = webgazer.getStoredPoints();
+              var precision_measurement = calculatePrecision(past50);
               // alert( "Your accuracy measure is " + precision_measurement + "%")
               console.log(
                 "Your accuracy measure is " + precision_measurement + "%"
@@ -106,7 +114,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
               ClearCalibration();
               ClearCanvas();
               if(precision_measurement>30){
-                LoadEyeTrackingControls(cornerCoordinates);
+                LoadEyeTrackingControls();
               }else{
                 ShowCalibrationPoint();
               }
@@ -124,7 +132,7 @@ function makeFullScreen() {
   document.documentElement.requestFullscreen();
 }
 
-function LoadEyeTrackingControls(cornerCoordinates) {
+function LoadEyeTrackingControls() {
   const buttons = document.createElement("div");
   buttons.classList.add("buttons");
 
@@ -160,10 +168,10 @@ function getCornerGazes(){
     var x_tot=0
     var y_tot=0
     value.map((point)=>{
-      x_tot+=point[0];
-      y_tot+=point[1]
+      x_tot+=parseInt(point[0]);
+      y_tot+=parseInt(point[1])
     })
-    CornerGazes[key]=[parseInt((x_tot/5).toFixed()),parseInt((y_tot/5).toFixed())]
+    CornerGazes[key]=[parseInt((x_tot/value.length).toFixed()),parseInt((y_tot/value.length).toFixed())]
     // console.log(key + "= " + CornerGazes[key][0], CornerGazes[key][1])
     // cornerCoordinates
   }
@@ -174,6 +182,7 @@ function getCornerGazes(){
   for (i = 0; i < cornerCoordinates.length; i++){
     console.log(cornerCoordinates[i])
   }
+  // document.body.insertAdjacentText('beforeend', cornerCoordinates.toString())
 }
 
 function ClearCanvas(){

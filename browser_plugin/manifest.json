@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
-	"name": "My First Chrome Extension",
-	"description": "This is the description for your first chrome extension",
+	"name": "E-Proctor",
+	"description": "Detect cheat based on eye tracking",
 	"version": "1.0",
 	"background": {
 		"scripts": [
@@ -13,7 +13,7 @@
 	"browser_action": {
  		"default_icon": "image.png",
  		"default_popup": "popup.html",
- 		"default_title": "My First Chrome Extension"
+ 		"default_title": "Chrome Extension"
  	},
 	 "options_page": "options.html",
 
