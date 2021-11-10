@@ -1,0 +1,89 @@
+.endBtn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    z-index: 867530999; 
+    display: inline-block; 
+    background-color: gray;
+}
+
+.buttons{
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    z-index: 867530999; 
+    display: inline-block; 
+}
+
+.buttons2{
+    position: fixed;
+    top: 45px;
+    right: 200px;
+    padding: 10px;
+    z-index: 867530999; 
+}
+
+.btn{
+    background-color: gray;
+    margin: 10px;
+    padding: 5px;
+}
+
+/* Calibration button styling */
+.Calibration{
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    background-color: red;
+    opacity: 0.2;
+    border-color: black;
+    border-style: solid;
+    position:fixed;
+    z-index: 867530999; 
+}
+
+/* Calibration point position */
+#Pt1{
+    top: 0px;
+    left:0vw;
+}
+#Pt2{
+    top: 0px;
+    left:50vw;
+}
+#Pt3{
+    top: 0px;
+    right:0vw;
+}
+#Pt4{
+    top:50vh;
+    left:0vw;
+}
+#Pt5{
+    top: 50vh;
+    left: 50vw;
+}
+#Pt6{
+    top: 50vh;
+    right:0vw;
+}
+#Pt7{
+    bottom:0vw;
+    left: 0vw;
+}
+#Pt8{
+    bottom:0vw;
+    left:50vw;
+}
+#Pt9{
+    bottom:0vw;
+    right:0vw;
+}
+
+body {
+    overflow: auto !important;
+}

@@ -1,0 +1,28 @@
+{
+	"manifest_version": 2,
+	"name": "Research Experiments",
+	"description": "This is the description for your first chrome extension",
+	"version": "1.0",
+	"background": {
+		"scripts": [
+			"jquery-3.6.0.min.js"
+		]
+	},
+	"browser_action": {
+ 		"default_icon": "image.png",
+ 		"default_popup": "popup.html",
+ 		"default_title": "My First Chrome Extension"
+ 	},
+	 "options_page": "options.html",
+
+	 "content_scripts":[{
+		 "matches":["http://*/*","https://*/*"],
+		 "js":["jquery-3.6.0.min.js","content/content-script.js","content/eye-tracker.js","content/calibration.js","webgazer.js"],
+		 "css":["content/content-script.css"]
+	 }],
+
+	 "permissions": [
+		"storage",
+		"tabs","<all_urls>"
+	  ]
+}
