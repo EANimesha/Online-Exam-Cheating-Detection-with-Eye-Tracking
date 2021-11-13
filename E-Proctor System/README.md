@@ -1,7 +1,7 @@
 # E - Proctor System
 **How it works?** 
 
-![[system design]](https://github.com/EANimesha/Online-Exam-Cheating-Detection-with-Eye-Tracking/tree/master/E-Proctor%20System/plugin.png)
+<img alt = "system design" src="https://github.com/EANimesha/Online-Exam-Cheating-Detection-with-Eye-Tracking/blob/master/E-Proctor%20System/plugin.png" width="400"  />
 
 ### Setup the plugin
 1. Go to chrome browser.
